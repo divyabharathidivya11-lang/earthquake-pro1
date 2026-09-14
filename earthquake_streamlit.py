@@ -20,29 +20,30 @@ st.sidebar.title("\U0001F4CA Analysis Categories")
 
 categories = {
     "Magnitude & Depth": {
-        "Top 10 strongest earthquakes": "result",
-        "Top 10 deepest earthquakes": "result1",
+        "Top 10 strongest earthquakes (mag)": "result",
+        "Top 10 deepest earthquakes (depth_km)": "result1",
         "Shallow earthquakes below 50 km and magnitude above 7.5": "result3",
-        "Average magnitude by magnitude type": "result4"
+        "Average magnitude by magnitude type(magType)": "result4"
     },
 
     "Time Analysis": {
         "Year with most earthquakes": "result5",
         "Month with highest number of earthquakes": "result6",
         "Day of week with most earthquakes": "result7",
-        "Earthquake count by hour": "result8"
+        "Earthquake count by hour": "result8",
+        "Most active reporting network (net)": "result9"
     },
 
     "Casualties & Economic Loss": {
-        "Top 5 places with highest felt reports": "result10",
+        "Top 5 places with highest casualties with the help of felt reports": "result10",
         "Earthquake count by alert level": "result11"
     },
 
     "Event Type & Quality Metrics": {
-        "Reviewed vs automatic earthquakes": "result12",
-        "Count by earthquake type": "result13",
-        "Number of earthquakes by data types": "result14",
-        "Events with high station coverage": "result15"
+        "Count of reviewed vs automatic earthquakes(status)": "result12",
+        "Count by earthquake type(type)": "result13",
+        "Number of earthquakes by data types(types)": "result14",
+        "Events with high station coverage (nst > threshold)": "result15"
     },
 
     "Tsunamis & Alerts": {
@@ -88,7 +89,7 @@ result_df = getattr(earthquake_sql, result_variable)
 #st.header(selected_question)
 
 # Display result
-st.dataframe(result_df, use_container_width=True)
+st.dataframe(result_df, width="stretch")
 
 # Display a chart for selected results
 if selected_question == "Year with most earthquakes":
@@ -101,7 +102,3 @@ elif selected_question == "Month with highest number of earthquakes":
         result_df.set_index("month")["earthquake_count"]
     )
 
-elif selected_question == "Number of tsunamis per year":
-    st.bar_chart(
-        result_df.set_index("year")["eathquake_count_tunami"]
-    )
